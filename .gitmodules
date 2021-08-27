@@ -1,0 +1,99 @@
+[submodule "thirdparty/align"]
+	path = thirdparty/align
+	url = https://github.com/boostorg/align
+[submodule "thirdparty/array"]
+	path = thirdparty/array
+	url = https://github.com/boostorg/array
+[submodule "thirdparty/assert"]
+	path = thirdparty/assert
+	url = https://github.com/boostorg/assert
+[submodule "thirdparty/atomic"]
+	path = thirdparty/atomic
+	url = https://github.com/boostorg/atomic
+[submodule "thirdparty/concept_check"]
+	path = thirdparty/concept_check
+	url = https://github.com/boostorg/concept_check
+[submodule "thirdparty/config"]
+	path = thirdparty/config
+	url = https://github.com/boostorg/config
+[submodule "thirdparty/container_hash"]
+	path = thirdparty/container_hash
+	url = https://github.com/boostorg/container_hash
+[submodule "thirdparty/conversion"]
+	path = thirdparty/conversion
+	url = https://github.com/boostorg/conversion
+[submodule "thirdparty/core"]
+	path = thirdparty/core
+	url = https://github.com/boostorg/core
+[submodule "thirdparty/detail"]
+	path = thirdparty/detail
+	url = https://github.com/boostorg/detail
+[submodule "thirdparty/filesystem"]
+	path = thirdparty/filesystem
+	url = https://github.com/boostorg/filesystem
+[submodule "thirdparty/function_types"]
+	path = thirdparty/function_types
+	url = https://github.com/boostorg/function_types
+[submodule "thirdparty/fusion"]
+	path = thirdparty/fusion
+	url = https://github.com/boostorg/fusion
+[submodule "thirdparty/integer"]
+	path = thirdparty/integer
+	url = https://github.com/boostorg/integer
+[submodule "thirdparty/io"]
+	path = thirdparty/io
+	url = https://github.com/boostorg/io
+[submodule "thirdparty/iterator"]
+	path = thirdparty/iterator
+	url = https://github.com/boostorg/iterator
+[submodule "thirdparty/move"]
+	path = thirdparty/move
+	url = https://github.com/boostorg/move
+[submodule "thirdparty/mpl"]
+	path = thirdparty/mpl
+	url = https://github.com/boostorg/mpl
+[submodule "thirdparty/optional"]
+	path = thirdparty/optional
+	url = https://github.com/boostorg/optional
+[submodule "thirdparty/predef"]
+	path = thirdparty/predef
+	url = https://github.com/boostorg/predef
+[submodule "thirdparty/preprocessor"]
+	path = thirdparty/preprocessor
+	url = https://github.com/boostorg/preprocessor
+[submodule "thirdparty/range"]
+	path = thirdparty/range
+	url = https://github.com/boostorg/range
+[submodule "thirdparty/regex"]
+	path = thirdparty/regex
+	url = https://github.com/boostorg/regex
+[submodule "thirdparty/smart_ptr"]
+	path = thirdparty/smart_ptr
+	url = https://github.com/boostorg/smart_ptr
+[submodule "thirdparty/static_assert"]
+	path = thirdparty/static_assert
+	url = https://github.com/boostorg/static_assert
+[submodule "thirdparty/system"]
+	path = thirdparty/system
+	url = https://github.com/boostorg/system
+[submodule "thirdparty/throw_exception"]
+	path = thirdparty/throw_exception
+	url = https://github.com/boostorg/throw_exception
+[submodule "thirdparty/tuple"]
+	path = thirdparty/tuple
+	url = https://github.com/boostorg/tuple
+[submodule "thirdparty/type_traits"]
+	path = thirdparty/type_traits
+	url = https://github.com/boostorg/type_traits
+[submodule "thirdparty/typeof"]
+	path = thirdparty/typeof
+	url = https://github.com/boostorg/typeof
+[submodule "thirdparty/utility"]
+	path = thirdparty/utility
+	url = https://github.com/boostorg/utility
+[submodule "thirdparty/winapi"]
+	path = thirdparty/winapi
+	url = https://github.com/boostorg/winapi
+[submodule "thirdparty/SFML"]
+	path = thirdparty/SFML
+	url = https://github.com/SFML/SFML
