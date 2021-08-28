@@ -5,6 +5,7 @@
 #include <string>
 #include "common/types.hpp"
 #include "common/fs.hpp"
+#include "common/network.hpp"
 
 enum class RepositoryType: u8{
     Local  = 0x01,
@@ -23,7 +24,14 @@ struct RepositoryOperation{
     fs::path RelativeFilePath;
 };
 
-using RepositoryState = std::vector<fs::path>;
+
+struct RepositoryState: std::vector<fs::path>{
+    friend Packet &operator<<(Packet &packet, const RepositoryState &state);
+    
+    friend Packet &operator>>(Packet &packet, RepositoryState &state);
+
+    friend std::ostream &operator<<(std::ostream &ostream, const RepositoryState &state);
+};
 
 extern std::vector<RepositoryOperation> GetStateTransformations(const RepositoryState &old_state, const RepositoryState &new_state);
 

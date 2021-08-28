@@ -43,3 +43,34 @@ std::vector<RepositoryOperation> Repository::UpdateState(){
     return ops;
 }
 
+Packet &operator<<(Packet &packet, const RepositoryState &state){
+    packet << (Uint64)state.size();
+    for(const fs::path &entry: state)
+        packet << entry.string();
+    return packet;
+}
+
+Packet &operator>>(Packet &packet, RepositoryState &state){
+    Uint64 entries_count = 0;
+    packet >> entries_count;
+
+    state.reserve(entries_count);
+
+    for(Uint64 i = 0; i<entries_count; i++){
+        std::string filename;
+        packet >> filename;
+        state.push_back(filename);
+    }
+
+    return packet;
+}
+
+std::ostream &operator<<(std::ostream &ostream, const RepositoryState &state){
+    ostream << "RepositoryState: " << state.size() << " entries" << std::endl;
+
+    for(const auto &entry: state){
+        ostream << entry << std::endl;
+    }
+
+    return ostream;
+}
