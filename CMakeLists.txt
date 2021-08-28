@@ -45,6 +45,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/SFML)
 
 set(CORTEX_COMMON_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/sources/repository.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/sources/protocol.cpp
 )
 
 add_library(CortexCommon STATIC 
