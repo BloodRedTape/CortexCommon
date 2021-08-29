@@ -14,6 +14,7 @@ enum class MsgType: u8{
     FileContentRequest,
     FileContentResponce,
     RepositoryStateNotify,
+    RepositoriesInfo
 };
 
 struct Header{
@@ -49,6 +50,14 @@ struct RepositoryStateNotify{
     friend Packet &operator<<(Packet &packet, const RepositoryStateNotify &header);
 
     friend Packet &operator>>(Packet &packet, RepositoryStateNotify &header);
+};
+
+struct RepositoriesInfo{
+    std::vector<std::string> Names;
+
+    friend Packet &operator<<(Packet &packet, const RepositoriesInfo &info);
+
+    friend Packet &operator>>(Packet &packet, RepositoriesInfo &info);
 };
 
 #endif//CORTEX_COMMON_PROTOCOL_HPP

@@ -51,3 +51,24 @@ Packet &operator>>(Packet &packet, RepositoryStateNotify &notify){
     packet >> notify.State;
     return packet;
 }
+
+Packet &operator<<(Packet &packet, const RepositoriesInfo &info){
+    packet << (Uint64)info.Names.size();
+    for(const auto &name: info.Names)
+        packet << name;
+    return packet;
+}
+
+Packet &operator>>(Packet &packet, RepositoriesInfo &info){
+    Uint64 size = 0;
+    packet >> size;
+    info.Names.reserve(size);
+
+    for(Uint64 i = 0; i<size; i++){
+        std::string filename;
+        packet >> filename;
+        info.Names.emplace_back(std::move(filename));
+    }
+
+    return packet;
+}
