@@ -1,6 +1,7 @@
 #include "common/repository.hpp"
 #include <cassert>
 #include <algorithm>
+#include <iostream>
 
 std::vector<RepositoryOperation> GetStateTransformations(const RepositoryState &old_state, const RepositoryState &new_state){
     std::vector<RepositoryOperation> ops;
@@ -59,7 +60,7 @@ Packet &operator>>(Packet &packet, RepositoryState &state){
     for(Uint64 i = 0; i<entries_count; i++){
         std::string filename;
         packet >> filename;
-        state.push_back(filename);
+        state.push_back(std::move(filename));
     }
 
     return packet;
@@ -73,4 +74,27 @@ std::ostream &operator<<(std::ostream &ostream, const RepositoryState &state){
     }
 
     return ostream;
+}
+
+bool RepositoriesRegistry::CreateRepository(fs::path path, std::string name){
+    if(!fs::exists(path)){
+        fs::create_directories(path);
+    }else if(!fs::is_empty(path)){
+        std::cerr << "RepositoriesRegistry: Can't create repo, directory is not empty\n";
+        return false;
+    }
+
+    Repositories.emplace_back(std::move(name), std::move(path));
+
+    return true; 
+}
+
+bool RepositoriesRegistry::OpenRepository(fs::path path, std::string name){
+    if(!fs::exists(path))
+        return false;
+
+    Repositories.emplace_back(std::move(name), std::move(path));
+    Repositories.back().UpdateState();
+
+    return true;
 }

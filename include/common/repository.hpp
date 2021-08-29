@@ -58,4 +58,12 @@ struct Repository{
     std::vector<RepositoryOperation> UpdateState();
 };
 
+struct RepositoriesRegistry{
+    std::vector<Repository> Repositories;
+
+    bool OpenRepository(fs::path path, std::string name);
+
+    bool CreateRepository(fs::path path, std::string name);
+};
+
 #endif//CORTEX_COMMON_REPOSITORY_HPP
