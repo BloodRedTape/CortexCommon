@@ -48,8 +48,14 @@ set(CORTEX_COMMON_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/sources/protocol.cpp
 )
 
+set(CORTEX_THIRDPARTY_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/inih/cpp/INIReader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/inih/ini.c
+)
+
 add_library(CortexCommon STATIC 
     ${CORTEX_COMMON_SOURCES}
+    ${CORTEX_THIRDPARTY_SOURCES}
 )
 
 target_include_directories(CortexCommon PUBLIC
@@ -57,6 +63,7 @@ target_include_directories(CortexCommon PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/SFML/include
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/filesystem/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/inih/cpp/
 )
 
 target_link_libraries(CortexCommon
