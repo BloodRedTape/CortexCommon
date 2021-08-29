@@ -14,38 +14,40 @@ Packet &operator>>(Packet &packet, Header &header){
     return packet;
 }
 
-Packet &operator<<(Packet &packet, const FileContentRequest &header){
-    packet << header.Name;
+Packet &operator<<(Packet &packet, const FileContentRequest &req){
+    packet << req.Name;
 
     return packet;
 }
 
-Packet &operator>>(Packet &packet, FileContentRequest &header){
-    packet >> header.Name;
+Packet &operator>>(Packet &packet, FileContentRequest &req){
+    packet >> req.Name;
 
     return packet;
 }
 
-Packet &operator<<(Packet &packet, const FileContentResponce &header){
-    packet << header.Name;
-    packet << header.Content;
+Packet &operator<<(Packet &packet, const FileContentResponce &res){
+    packet << res.Name;
+    packet << res.Content;
 
     return packet;
 }
 
-Packet &operator>>(Packet &packet, FileContentResponce &header){
-    packet >> header.Name;
-    packet >> header.Content;
+Packet &operator>>(Packet &packet, FileContentResponce &res){
+    packet >> res.Name;
+    packet >> res.Content;
 
     return packet;
 }
 
-Packet &operator<<(Packet &packet, const RepositoryStateNotify &header){
-    packet << header.State;
+Packet &operator<<(Packet &packet, const RepositoryStateNotify &notify){
+    packet << notify.Name;
+    packet << notify.State;
     return packet;
 }
 
-Packet &operator>>(Packet &packet, RepositoryStateNotify &header){
-    packet >> header.State;
+Packet &operator>>(Packet &packet, RepositoryStateNotify &notify){
+    packet >> notify.Name;
+    packet >> notify.State;
     return packet;
 }
