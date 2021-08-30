@@ -61,6 +61,9 @@ target_include_directories(CortexCommon PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/yaml-cpp/include
 )
 
+set(CXX_STANDARD 17)
+set(CXX_STANDARD_REQUIRED ON)
+
 target_link_libraries(CortexCommon
     sfml-system
     sfml-network
