@@ -2,6 +2,7 @@
 #define CORTEX_COMMON_REPOSITORY_HPP
 
 #include <vector>
+#include <unordered_map>
 #include <string>
 #include "common/types.hpp"
 #include "common/fs.hpp"
@@ -36,12 +37,10 @@ struct RepositoryState: std::vector<fs::path>{
 extern std::vector<RepositoryOperation> GetStateTransformations(const RepositoryState &old_state, const RepositoryState &new_state);
 
 struct Repository{
-    std::string Name;
     fs::path Path;
     RepositoryState LastState;
 
-    Repository(std::string name, fs::path path):
-        Name(std::move(name)),
+    Repository(fs::path path):
         Path(std::move(path))
     {}
 
@@ -53,17 +52,19 @@ struct Repository{
 
     Repository &operator=(Repository &&) = default;
 
-    RepositoryState QueryCurrentState();
+    RepositoryState QueryCurrentState()const;
 
     std::vector<RepositoryOperation> UpdateState();
 };
 
 struct RepositoriesRegistry{
-    std::vector<Repository> Repositories;
+    std::unordered_map<std::string, Repository> Repositories;
 
     bool OpenRepository(fs::path path, std::string name);
 
     bool IsOpen(const std::string &name)const;
+
+    Repository *Get(const std::string &name);
 };
 
 #endif//CORTEX_COMMON_REPOSITORY_HPP

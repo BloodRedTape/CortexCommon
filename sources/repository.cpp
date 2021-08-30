@@ -19,7 +19,7 @@ std::vector<RepositoryOperation> GetStateTransformations(const RepositoryState &
     return ops;
 }
 
-RepositoryState Repository::QueryCurrentState(){
+RepositoryState Repository::QueryCurrentState()const{
     fs::path path = fs::absolute(Path);
 
     assert(fs::is_directory(path));
@@ -83,16 +83,16 @@ bool RepositoriesRegistry::OpenRepository(fs::path path, std::string name){
         return false;
     }
 
-    Repositories.emplace_back(std::move(name), std::move(path));
-    Repositories.back().UpdateState();
+    auto it = Repositories.emplace(std::move(name), std::move(path));
+    it.first->second.UpdateState();
 
     return true;
 }
 
 bool RepositoriesRegistry::IsOpen(const std::string &name)const{
-    for(const auto &repo: Repositories){
-        if(repo.Name == name)
-            return true;
-    }
-    return false;
+    return Repositories.find(name) != Repositories.end();
+}
+
+Repository *RepositoriesRegistry::Get(const std::string &name){
+    return nullptr;
 }
