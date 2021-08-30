@@ -1,7 +1,8 @@
 #include "common/repository.hpp"
 #include <cassert>
 #include <algorithm>
-#include <iostream>
+#include "fmt/printf.h"
+#include <cstdio>
 
 std::vector<RepositoryOperation> GetStateTransformations(const RepositoryState &old_state, const RepositoryState &new_state){
     std::vector<RepositoryOperation> ops;
@@ -78,8 +79,8 @@ std::ostream &operator<<(std::ostream &ostream, const RepositoryState &state){
 
 bool RepositoriesRegistry::OpenRepository(fs::path path, std::string name){
     if(!fs::exists(path)){
-        std::cerr << "Can't open '" << name << "' repository" << std::endl;
-        std::cerr << "Path: " << path << " does not exist" << std::endl;
+        fmt::print(stderr, "Can't open '{}' repository", name);
+        fmt::print(stderr, "Path '{}' does not exist", path.string());
         return false;
     }
 
