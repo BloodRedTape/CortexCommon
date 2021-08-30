@@ -27,7 +27,8 @@ struct Header{
 };
 
 struct FileContentRequest{
-    std::string Name;
+    std::string RepositoryName;
+    std::string FileName;
 
     friend Packet &operator<<(Packet &packet, const FileContentRequest &header);
 
@@ -35,8 +36,9 @@ struct FileContentRequest{
 };
 
 struct FileContentResponce{
-    std::string Name;
-    std::string Content;
+    std::string RepositoryName;
+    std::string FileName;
+    std::string FileContent;
 
     friend Packet &operator<<(Packet &packet, const FileContentResponce &header);
 
@@ -44,8 +46,8 @@ struct FileContentResponce{
 };
 
 struct RepositoryStateNotify{
-    std::string Name;
-    RepositoryState State;
+    std::string RepositoryName;
+    RepositoryState RepositoryState;
 
     friend Packet &operator<<(Packet &packet, const RepositoryStateNotify &header);
 
@@ -53,7 +55,7 @@ struct RepositoryStateNotify{
 };
 
 struct RepositoriesInfo{
-    std::vector<std::string> Names;
+    std::vector<std::string> RepositoryNames;
 
     friend Packet &operator<<(Packet &packet, const RepositoriesInfo &info);
 

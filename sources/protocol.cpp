@@ -15,46 +15,50 @@ Packet &operator>>(Packet &packet, Header &header){
 }
 
 Packet &operator<<(Packet &packet, const FileContentRequest &req){
-    packet << req.Name;
+    packet << req.RepositoryName;
+    packet << req.FileName;
 
     return packet;
 }
 
 Packet &operator>>(Packet &packet, FileContentRequest &req){
-    packet >> req.Name;
+    packet << req.RepositoryName;
+    packet >> req.FileName;
 
     return packet;
 }
 
 Packet &operator<<(Packet &packet, const FileContentResponce &res){
-    packet << res.Name;
-    packet << res.Content;
+    packet << res.RepositoryName;
+    packet << res.FileName;
+    packet << res.FileContent;
 
     return packet;
 }
 
 Packet &operator>>(Packet &packet, FileContentResponce &res){
-    packet >> res.Name;
-    packet >> res.Content;
+    packet >> res.RepositoryName;
+    packet >> res.FileName;
+    packet >> res.FileContent;
 
     return packet;
 }
 
 Packet &operator<<(Packet &packet, const RepositoryStateNotify &notify){
-    packet << notify.Name;
-    packet << notify.State;
+    packet << notify.RepositoryName;
+    packet << notify.RepositoryState;
     return packet;
 }
 
 Packet &operator>>(Packet &packet, RepositoryStateNotify &notify){
-    packet >> notify.Name;
-    packet >> notify.State;
+    packet >> notify.RepositoryName;
+    packet >> notify.RepositoryState;
     return packet;
 }
 
 Packet &operator<<(Packet &packet, const RepositoriesInfo &info){
-    packet << (Uint64)info.Names.size();
-    for(const auto &name: info.Names)
+    packet << (Uint64)info.RepositoryNames.size();
+    for(const auto &name: info.RepositoryNames)
         packet << name;
     return packet;
 }
@@ -62,12 +66,12 @@ Packet &operator<<(Packet &packet, const RepositoriesInfo &info){
 Packet &operator>>(Packet &packet, RepositoriesInfo &info){
     Uint64 size = 0;
     packet >> size;
-    info.Names.reserve(size);
+    info.RepositoryNames.reserve(size);
 
     for(Uint64 i = 0; i<size; i++){
         std::string filename;
         packet >> filename;
-        info.Names.emplace_back(std::move(filename));
+        info.RepositoryNames.emplace_back(std::move(filename));
     }
 
     return packet;
