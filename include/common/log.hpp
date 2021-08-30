@@ -28,4 +28,16 @@ inline bool Error(const char *fmt, ArgsType&&...args){
     return false;
 }
 
+template<typename ...ArgsType>
+inline void Print(const char *fmt, ArgsType&&...args){
+    fmt::print(fmt, std::forward<ArgsType>(args)...);
+}
+
+template<typename ...ArgsType>
+inline void Println(const char *fmt, ArgsType&&...args){
+    fmt::print(fmt, std::forward<ArgsType>(args)...);
+    fmt::print("\n");
+}
+
+
 #endif//CORTEX_COMMON_LOG_HPP
