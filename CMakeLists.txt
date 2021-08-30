@@ -43,6 +43,7 @@ set(SFML_BUILD_NETWORK TRUE)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/SFML)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/yaml-cpp)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/fmt)
 
 set(CORTEX_COMMON_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/sources/repository.cpp
@@ -59,6 +60,7 @@ target_include_directories(CortexCommon PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/SFML/include
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/filesystem/include
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/yaml-cpp/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/fmt/include
 )
 
 set(CXX_STANDARD 17)
@@ -102,4 +104,5 @@ target_link_libraries(CortexCommon
     Boost::regex
 
     yaml-cpp
+    fmt
 )
