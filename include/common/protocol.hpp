@@ -47,7 +47,7 @@ struct FileContentResponce{
 
 struct RepositoryStateNotify{
     std::string RepositoryName;
-    RepositoryState RepositoryState;
+    struct RepositoryState RepositoryState;
 
     friend Packet &operator<<(Packet &packet, const RepositoryStateNotify &header);
 
