@@ -1,7 +1,7 @@
 #include "common/repository.hpp"
 #include <cassert>
 #include <algorithm>
-#include "fmt/printf.h"
+#include "common/log.hpp"
 
 std::vector<RepositoryOperation> GetStateTransformations(const RepositoryState &old_state, const RepositoryState &new_state){
     std::vector<RepositoryOperation> ops;
@@ -77,11 +77,9 @@ std::ostream &operator<<(std::ostream &ostream, const RepositoryState &state){
 }
 
 bool RepositoriesRegistry::OpenRepository(fs::path path, std::string name){
-    if(!fs::exists(path)){
-        fmt::print("Can't open '{}' repository\n", name);
-        fmt::print("Path '{}' does not exist\n", path.string());
-        return false;
-    }
+    if(!fs::exists(path))
+        return Error("Can't open '{}' repository\n"
+                     "Path {} does not exist", name, path.string());
 
     auto it = Repositories.emplace(std::move(name), std::move(path));
     it.first->second.UpdateState();
