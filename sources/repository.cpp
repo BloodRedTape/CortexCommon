@@ -76,25 +76,23 @@ std::ostream &operator<<(std::ostream &ostream, const RepositoryState &state){
     return ostream;
 }
 
-bool RepositoriesRegistry::CreateRepository(fs::path path, std::string name){
+bool RepositoriesRegistry::OpenRepository(fs::path path, std::string name){
     if(!fs::exists(path)){
-        fs::create_directories(path);
-    }else if(!fs::is_empty(path)){
-        std::cerr << "RepositoriesRegistry: Can't create repo, directory is not empty\n";
+        std::cerr << "Can't open '" << name << "' repository" << std::endl;
+        std::cerr << "Path: " << path << " does not exist" << std::endl;
         return false;
     }
-
-    Repositories.emplace_back(std::move(name), std::move(path));
-
-    return true; 
-}
-
-bool RepositoriesRegistry::OpenRepository(fs::path path, std::string name){
-    if(!fs::exists(path))
-        return false;
 
     Repositories.emplace_back(std::move(name), std::move(path));
     Repositories.back().UpdateState();
 
     return true;
+}
+
+bool RepositoriesRegistry::IsOpen(const std::string &name)const{
+    for(const auto &repo: Repositories){
+        if(repo.Name == name)
+            return true;
+    }
+    return false;
 }

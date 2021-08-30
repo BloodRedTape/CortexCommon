@@ -63,7 +63,7 @@ struct RepositoriesRegistry{
 
     bool OpenRepository(fs::path path, std::string name);
 
-    bool CreateRepository(fs::path path, std::string name);
+    bool IsOpen(const std::string &name)const;
 };
 
 #endif//CORTEX_COMMON_REPOSITORY_HPP
