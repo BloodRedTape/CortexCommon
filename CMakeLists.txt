@@ -42,6 +42,7 @@ set(SFML_BUILD_AUDIO FALSE)
 set(SFML_BUILD_NETWORK TRUE)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/SFML)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/yaml-cpp)
 
 set(CORTEX_COMMON_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/sources/repository.cpp
@@ -57,6 +58,7 @@ target_include_directories(CortexCommon PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/SFML/include
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/filesystem/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/yaml-cpp/include
 )
 
 target_link_libraries(CortexCommon
@@ -95,4 +97,6 @@ target_link_libraries(CortexCommon
     Boost::align
     Boost::array
     Boost::regex
+
+    yaml-cpp
 )
