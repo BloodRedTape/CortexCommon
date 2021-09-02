@@ -48,6 +48,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/fmt)
 set(CORTEX_COMMON_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/sources/repository.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/sources/protocol.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/sources/connection.cpp
 )
 
 add_library(CortexCommon STATIC 

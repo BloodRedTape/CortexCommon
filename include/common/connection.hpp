@@ -2,8 +2,12 @@
 #define CORTEX_COMMON_CONNECTION_HPP
 
 #include "common/network.hpp"
+#include "protocol.hpp"
 
-struct Connection: TcpSocket{
+class Connection: public TcpSocket{
+private:
+    Packet m_SendBuffer;
+public:
     Connection(){
         setBlocking(false);
     }
@@ -11,6 +15,18 @@ struct Connection: TcpSocket{
     Connection(Connection &&) = default;
 
     Connection &operator=(Connection &&) = default;
+
+    void Send(FileContentRequest req);
+
+    void Send(FileContentResponce resp);
+
+    void Send(RepositoryStateNotify notify);
+
+    void Send(RepositoriesInfo info);
+
+    std::string ToString();
+
+    void OnSendError(Status status);
 };
 
 #endif//CORTEX_COMMON_CONNECTION_HPP

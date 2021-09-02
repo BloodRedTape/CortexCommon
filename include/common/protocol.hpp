@@ -6,7 +6,7 @@
 #include "common/network.hpp"
 #include "common/repository.hpp"
 
-constexpr u16 s_DefaultServerPort = 54345;
+constexpr u16 s_DefaultServerPort = 54346;
 constexpr u32 s_MagicWord = 0xBBBAADDD;
 
 enum class MsgType: u8{
@@ -55,7 +55,7 @@ struct RepositoryStateNotify{
 };
 
 struct RepositoriesInfo{
-    std::vector<std::string> RepositoryNames;
+    std::vector<RepositoryStateNotify> Repositories;
 
     friend Packet &operator<<(Packet &packet, const RepositoriesInfo &info);
 
