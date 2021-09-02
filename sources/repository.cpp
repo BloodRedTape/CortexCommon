@@ -92,5 +92,7 @@ bool RepositoriesRegistry::IsOpen(const std::string &name)const{
 }
 
 Repository *RepositoriesRegistry::Get(const std::string &name){
-    return nullptr;
+    auto it = Repositories.find(name);
+
+    return (it != Repositories.end() ? &it->second : nullptr);
 }
