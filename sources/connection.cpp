@@ -49,10 +49,10 @@ void Connection::Send(RepositoryStateNotify notify){
         OnSendError(status);
 }
 
-void Connection::Send(RepositoriesInfo info){
+void Connection::Send(AllRepositoriesStateNotify info){
     Header header;
     header.MagicWord = s_MagicWord;
-    header.Type = MsgType::RepositoriesInfo;
+    header.Type = MsgType::AllRepositoriesStateNotify;
 
     m_SendBuffer << header;
 

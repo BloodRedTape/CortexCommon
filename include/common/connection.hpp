@@ -22,7 +22,7 @@ public:
 
     void Send(RepositoryStateNotify notify);
 
-    void Send(RepositoriesInfo info);
+    void Send(AllRepositoriesStateNotify info);
 
     std::string ToString();
 

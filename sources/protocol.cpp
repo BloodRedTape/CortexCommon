@@ -56,14 +56,14 @@ Packet &operator>>(Packet &packet, RepositoryStateNotify &notify){
     return packet;
 }
 
-Packet &operator<<(Packet &packet, const RepositoriesInfo &info){
+Packet &operator<<(Packet &packet, const AllRepositoriesStateNotify &info){
     packet << (Uint64)info.Repositories.size();
     for(const auto &notify: info.Repositories)
         packet << notify;
     return packet;
 }
 
-Packet &operator>>(Packet &packet, RepositoriesInfo &info){
+Packet &operator>>(Packet &packet, AllRepositoriesStateNotify &info){
     Uint64 size = 0;
     packet >> size;
     info.Repositories.reserve(size);
