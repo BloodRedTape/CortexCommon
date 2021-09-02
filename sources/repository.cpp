@@ -99,34 +99,23 @@ Repository *RepositoriesRegistry::Get(const std::string &name){
     return (it != Repositories.end() ? &it->second : nullptr);
 }
 
-
-RepositoriesPathStorage::RepositoriesPathStorage(const char *filepath){
-    constexpr const char *DefaultPath = "DefaultPath";
-    constexpr const char *Repositories = "Repositories";
-    constexpr const char *Name = "Name";
-    constexpr const char *Path = "Path";
-
-    YAML::Node config = YAML::LoadFile(filepath);
+bool RepositoriesConfig::LoadFromNode(YAML::Node config){
+    constexpr const char *s_Repositories = "Repositories";
+    constexpr const char *s_Name = "Name";
+    constexpr const char *s_Path = "Path";
 
     if(!config)
-        throw Exception("[RepositoriesPathStorage]: Can't load config from '{}'", filepath);
+        return Error("[RepositoriesConfig]: node is null");
 
-    if(!config[DefaultPath])
-        throw Exception("[RepositoriesPathStorage]: No default path in config");
+    if(config[s_Repositories]){
+        if(!config[s_Repositories].IsSequence())
+            return Error("[RepositoriesPathStorage]: Repositories should be a yaml sequence");
 
-    m_DefaultPath = config[DefaultPath].as<std::string>();
-
-    YAML::Node repositories = config[Repositories];
-    if(config[Repositories]){
-        if(!config[Repositories].IsSequence())
-            throw Exception("[RepositoriesPathStorage]: Repositories should be a yaml sequence");
-
-        
-        for(const auto &repo: config[Repositories]){
-            if(repo[Name]            && repo[Path]
-            && repo[Name].IsScalar() && repo[Path].IsScalar()){
-                std::string name = repo[Name].as<std::string>();
-                std::string path = repo[Path].as<std::string>();
+        for(const auto &repo: config[s_Repositories]){
+            if(repo[s_Name]            && repo[s_Path]
+            && repo[s_Name].IsScalar() && repo[s_Path].IsScalar()){
+                std::string name = repo[s_Name].as<std::string>();
+                std::string path = repo[s_Path].as<std::string>();
 
                 emplace(std::move(name), std::move(path));
             }else{
@@ -134,10 +123,39 @@ RepositoriesPathStorage::RepositoriesPathStorage(const char *filepath){
             }
         }
     }
+    
+    return true;
 }
 
-fs::path RepositoriesPathStorage::GetPath(const std::string &name){
+bool DefaultPathConfig::LoadFromNode(YAML::Node config){
+    constexpr const char *s_DefaultPath = "DefaultPath";
+
+    if(!config)
+        return Error("[DefaultPathConfig]: node is null");
+
+    if(!config[s_DefaultPath])
+        return Error("[DefaultPathConfig]: No default path in config");
+
+    DefaultPath = config[s_DefaultPath].as<std::string>();
+
+    return true;
+}
+
+RepositoriesPathConfig::RepositoriesPathConfig(const char *filepath){
+    YAML::Node config = YAML::LoadFile(filepath);
+
+    if(!config)
+        throw Exception("[RepositoriesPathStorage]: Can't load config from '{}'", filepath);
+
+    bool path_config = DefaultPathConfig::LoadFromNode(config);
+    bool repos_config = RepositoriesConfig::LoadFromNode(config);
+
+    if(!path_config || !repos_config)
+        throw Exception("[RepositoriesPathStorage]: Failed to load parent configs");
+}
+
+fs::path RepositoriesPathConfig::GetPath(const std::string &name){
     auto it = find(name);
 
-    return (it != end()) ? it->second : m_DefaultPath / name;
+    return (it != end()) ? it->second : DefaultPath / name;
 }

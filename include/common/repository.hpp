@@ -7,6 +7,7 @@
 #include "common/types.hpp"
 #include "common/fs.hpp"
 #include "common/network.hpp"
+#include "yaml-cpp/yaml.h"
 
 enum class RepositoryType: u8{
     Local  = 0x01,
@@ -67,11 +68,20 @@ struct RepositoriesRegistry{
     Repository *Get(const std::string &name);
 };
 
-class RepositoriesPathStorage: public std::unordered_map<std::string, fs::path>{
-private:
-    fs::path m_DefaultPath;
-public:
-    RepositoriesPathStorage(const char *filepath);
+struct RepositoriesConfig: public std::unordered_map<std::string, fs::path>{
+
+    bool LoadFromNode(YAML::Node config);
+};
+
+struct DefaultPathConfig{
+    fs::path DefaultPath = "./"; 
+
+    bool LoadFromNode(YAML::Node config);
+};
+
+struct RepositoriesPathConfig: public RepositoriesConfig, public DefaultPathConfig{
+
+    RepositoriesPathConfig(const char *yaml_filepath);
 
     fs::path GetPath(const std::string &name);
 };
