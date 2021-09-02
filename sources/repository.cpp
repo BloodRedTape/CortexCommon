@@ -1,7 +1,9 @@
 #include "common/repository.hpp"
 #include <cassert>
 #include <algorithm>
+#include <string>
 #include "common/log.hpp"
+#include "yaml-cpp/yaml.h"
 
 std::vector<RepositoryOperation> GetStateTransformations(const RepositoryState &old_state, const RepositoryState &new_state){
     std::vector<RepositoryOperation> ops;
@@ -95,4 +97,47 @@ Repository *RepositoriesRegistry::Get(const std::string &name){
     auto it = Repositories.find(name);
 
     return (it != Repositories.end() ? &it->second : nullptr);
+}
+
+
+RepositoriesPathStorage::RepositoriesPathStorage(const char *filepath){
+    constexpr const char *DefaultPath = "DefaultPath";
+    constexpr const char *Repositories = "Repositories";
+    constexpr const char *Name = "Name";
+    constexpr const char *Path = "Path";
+
+    YAML::Node config = YAML::LoadFile(filepath);
+
+    if(!config)
+        throw Exception("[RepositoriesPathStorage]: Can't load config from '{}'", filepath);
+
+    if(!config[DefaultPath])
+        throw Exception("[RepositoriesPathStorage]: No default path in config");
+
+    m_DefaultPath = config[DefaultPath].as<std::string>();
+
+    YAML::Node repositories = config[Repositories];
+    if(config[Repositories]){
+        if(!config[Repositories].IsSequence())
+            throw Exception("[RepositoriesPathStorage]: Repositories should be a yaml sequence");
+
+        
+        for(const auto &repo: config[Repositories]){
+            if(repo[Name]            && repo[Path]
+            && repo[Name].IsScalar() && repo[Path].IsScalar()){
+                std::string name = repo[Name].as<std::string>();
+                std::string path = repo[Path].as<std::string>();
+
+                emplace(std::move(name), std::move(path));
+            }else{
+                Println("[RepositoriesPathStorage]: invalid repository entry");
+            }
+        }
+    }
+}
+
+fs::path RepositoriesPathStorage::GetPath(const std::string &name){
+    auto it = find(name);
+
+    return (it != end()) ? it->second : m_DefaultPath / name;
 }

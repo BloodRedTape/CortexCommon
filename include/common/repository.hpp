@@ -67,4 +67,13 @@ struct RepositoriesRegistry{
     Repository *Get(const std::string &name);
 };
 
+class RepositoriesPathStorage: public std::unordered_map<std::string, fs::path>{
+private:
+    fs::path m_DefaultPath;
+public:
+    RepositoriesPathStorage(const char *filepath);
+
+    fs::path GetPath(const std::string &name);
+};
+
 #endif//CORTEX_COMMON_REPOSITORY_HPP
